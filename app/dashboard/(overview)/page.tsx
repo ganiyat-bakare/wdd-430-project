@@ -9,12 +9,20 @@ import {
   CardsSkeleton,
 } from '@/app/ui/skeletons';
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
+import { auth } from '@/auth';
  
 export const metadata: Metadata = {
   title: 'Dashboard',
 };
  
 export default async function Page() {
+  const session = await auth(); // get the server session
+
+  if (!session) {
+    redirect('/login');
+  }
+
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
